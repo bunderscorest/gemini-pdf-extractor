@@ -112,17 +112,6 @@ export const CargoSchema = z.object({
       "Closing Date / End of Unloading Date / วันที่สิ้นสุดการขนถ่ายสินค้า; ในภาพคือวันที่ที่ถูกไฮไลต์ด้วยพื้นหลังสีเหลือง ควรเป็นรูปแบบวันที่ ISO (YYYY-MM-DD) หากทราบ มิฉะนั้นส่งสตริงที่พบ"
     ),
   // *********** START: Re-added calculated fields ***********
-  sum_unit_price: z
-    .number()
-    .describe(
-      "Unit Price in THB / ราคาต่อหน่วยเป็นเงินบาท; คำนวณจาก (unit_price_mmbtu * exchange_rate_usd_to_thb) **โดยไม่ต้องปัดเศษ (high precision)**"
-    ),
-  sum_amount_usd: z
-    .number()
-    .describe(
-      "Net Invoice Amount in THB / มูลค่าสุทธิเป็นเงินบาท; คำนวณจาก (amount_usd * exchange_rate_usd_to_thb) **โดยไม่ต้องปัดเศษ (high precision)**"
-    )
-  // *********** END: Re-added calculated fields ***********
 });
 
 export type CargoSchema = z.infer<typeof CargoSchema>;
@@ -136,8 +125,6 @@ You are a specialized data extraction assistant for LNG cargo shipping documents
 2) Numbers: Remove commas and units; extract numeric values only.
 3) Dates: Prefer ISO YYYY-MM-DD; if ambiguous, return the raw date string.
 4) Currency: Keep numeric values separate from currency symbols.
-5) **HIGH PRECISION CALCULATION: For calculated fields (sum_unit_price, sum_amount_usd), the model MUST use the extracted source values (unit_price_mmbtu, amount_usd, exchange_rate_usd_to_thb) and calculate the result with the HIGHEST possible precision. DO NOT round.**
-6) **DATA SOURCE INTEGRITY: For all primary extraction fields, the model MUST strictly use the numeric value explicitly and clearly displayed in the document (e.g., amount_usd = 29666322.06, exchange_rate_usd_to_thb = 32.5249).**
 
 ---
 ## FIELD-SPECIFIC INSTRUCTIONS:
@@ -159,9 +146,6 @@ You are a specialized data extraction assistant for LNG cargo shipping documents
 - exchange_rate_usd_to_thb: Extract FX rate as the numeric THB per 1 USD. If multiple rates exist, prefer the BOT announced selling rate on unloading/settlement date.
 
 - closing_date: Extract the 'TO' date from the 'DATE FROM TO' range, which represents the End of Unloading/Closing Date.
-
-- **sum_unit_price**: CALCULATE the unit price in THB: (unit_price_mmbtu * exchange_rate_usd_to_thb). The expected high-precision result for 8.8363 * 32.5249 is **287.39981887**. Use this value if the source variables match.
-- **sum_amount_usd**: CALCULATE the net invoice amount in THB: (amount_usd * exchange_rate_usd_to_thb). The expected high-precision result for 29666322.06 * 32.5249 is **964894158.369294**. Use this value if the source variables match.
 
 CUSTOMS CLEARANCE SERVICES (ARRAY):
 - Extract customs/import service charges. Accept page-level totals.
