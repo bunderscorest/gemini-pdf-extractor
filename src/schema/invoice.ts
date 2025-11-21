@@ -37,7 +37,7 @@ export const InvoiceSchema = z
       ),
 
     // ราคาต่อหน่วย - Unit Price
-    unitPriceTHBPerMMBTU: z
+    unit_price_thb_per_mmbtu: z
       .number()
       .nonnegative()
       .describe(
@@ -47,7 +47,7 @@ export const InvoiceSchema = z
       ),
 
     // จำนวนเงิน - Subtotal (before VAT)
-    subtotalTHB: z
+    subtotal_thb: z
       .number()
       .nonnegative()
       .describe(
@@ -57,7 +57,7 @@ export const InvoiceSchema = z
       ),
 
     // ภาษีมูลค่าเพิ่ม - VAT Amount
-    vatTHB: z
+    vat_thb: z
       .number()
       .nonnegative()
       .describe(
@@ -67,7 +67,7 @@ export const InvoiceSchema = z
       ),
 
     // จำนวนเงินรวม - Grand Total
-    totalTHB: z
+    total_thb: z
       .number()
       .nonnegative()
       .describe(
@@ -83,7 +83,7 @@ export const InvoiceSchema = z
       .optional()
       .describe("Currency code | รหัสสกุลเงิน (e.g., THB, USD, EUR)"),
 
-    vatRate: z
+    vat_rate: z
       .number()
       .min(0)
       .max(1)
@@ -97,36 +97,36 @@ export const InvoiceSchema = z
   })
   /*
   .superRefine((val, ctx) => {
-    // Consistency check: subtotal ≈ quantity * unitPrice
+    // Consistency check: subtotal ≈ quantity * unit_price
     if (
       val.quantity !== undefined &&
-      val.unitPriceTHBPerMMBTU !== undefined &&
-      val.subtotalTHB !== undefined
+      val.unit_price_thb_per_mmbtu !== undefined &&
+      val.subtotal_thb !== undefined
     ) {
-      const expected = val.quantity * val.unitPriceTHBPerMMBTU;
-      const diff = Math.abs(expected - val.subtotalTHB);
+      const expected = val.quantity * val.unit_price_thb_per_mmbtu;
+      const diff = Math.abs(expected - val.subtotal_thb);
       // Allow tolerance for rounding (adjust as needed)
       if (diff > 2) {
         ctx.addIssue({
           code: "custom",
-          path: ["subtotalTHB"],
-          message: `Subtotal does not match quantity × unitPrice (difference ≈ $${diff.toFixed(2)}$$ {val.currency})`,
+          path: ["subtotal_thb"],
+          message: `Subtotal does not match quantity × unit_price (difference ≈ $${diff.toFixed(2)}$$ {val.currency})`,
         });
       }
     }
 
     // Consistency check: total ≈ subtotal + VAT
     if (
-      val.subtotalTHB !== undefined &&
-      val.vatTHB !== undefined &&
-      val.totalTHB !== undefined
+      val.subtotal_thb !== undefined &&
+      val.vat_thb !== undefined &&
+      val.total_thb !== undefined
     ) {
-      const expected = val.subtotalTHB + val.vatTHB;
-      const diff = Math.abs(expected - val.totalTHB);
+      const expected = val.subtotal_thb + val.vat_thb;
+      const diff = Math.abs(expected - val.total_thb);
       if (diff > 1) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["totalTHB"],
+          path: ["total_thb"],
           message: `Total does not equal subtotal + VAT (difference ≈ $${diff.toFixed(2)}$$ {val.currency})`,
         });
       }
