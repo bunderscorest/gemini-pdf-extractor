@@ -235,12 +235,12 @@ export const PELNGInvoiceSchema = z.object({
     .describe("Fixed-Cost Lc Amount (THB)"),
 
   // // page 8
-  fixed_cost_ld_phase_2_5_mtpa_quantity : z
+  fixed_cost_ld_phase_2_5_mtpa_quantity: z
     .number()
     .nonnegative()
     .optional()
     .describe("Fixed-Cost Ld Amount (THB)"),
-    
+
   fixed_cost_ld_phase_2_5_mtpa_price_per_unit: z
     .number()
     .nonnegative()
@@ -273,7 +273,7 @@ export const PELNGInvoiceSchema = z.object({
 
   // page 9
 
-  fixed_cost_ld_05_mtpa_quantity : z
+  fixed_cost_ld_05_mtpa_quantity: z
     .number()
     .nonnegative()
     .optional()
@@ -327,7 +327,7 @@ export const PELNGInvoiceSchema = z.object({
     .optional()
     .describe("Fixed-Cost Lc Amount (THB)"),
 
-  fixed_cost_ld_07_mtpa_quantity : z
+  fixed_cost_ld_07_mtpa_quantity: z
     .number()
     .nonnegative()
     .optional()
@@ -379,32 +379,41 @@ export const PELNGInvoiceSchema = z.object({
     .number()
     .nonnegative()
     .optional()
-    .describe("ราคา LNG สำหรับเที่ยวที่ 1 เดือน สิงหาคม 2568 | รวมค่าเนื้อ LNG และค่าใช้จ่ายนำเข้า"),
+    .describe(
+      "ราคา LNG สำหรับเที่ยวที่ 1 เดือน สิงหาคม 2568 | รวมค่าเนื้อ LNG และค่าใช้จ่ายนำเข้า"
+    ),
 
   no_2_rate_baht_per_mmbtu: z
     .number()
     .nonnegative()
     .optional()
-    .describe("ราคา LNG สำหรับเที่ยวที่ 2 เดือน สิงหาคม 2568 | รวมค่าเนื้อ LNG และค่าใช้จ่ายนำเข้า"),
+    .describe(
+      "ราคา LNG สำหรับเที่ยวที่ 2 เดือน สิงหาคม 2568 | รวมค่าเนื้อ LNG และค่าใช้จ่ายนำเข้า"
+    ),
 
-  no_3_rate_baht_per_mmbtu:z
+  no_3_rate_baht_per_mmbtu: z
     .number()
     .nonnegative()
     .optional()
-    .describe("ราคา LNG สำหรับเที่ยวที่ 3 เดือน สิงหาคม 2568 | รวมค่าเนื้อ LNG และค่าใช้จ่ายนำเข้า"),
+    .describe(
+      "ราคา LNG สำหรับเที่ยวที่ 3 เดือน สิงหาคม 2568 | รวมค่าเนื้อ LNG และค่าใช้จ่ายนำเข้า"
+    ),
 
   no_4_rate_baht_per_mmbtu: z
     .number()
     .nonnegative()
     .optional()
-    .describe("ราคา LNG สำหรับเที่ยวที่ 4 เดือน สิงหาคม 2568 | รวมค่าเนื้อ LNG และค่าใช้จ่ายนำเข้า"),
+    .describe(
+      "ราคา LNG สำหรับเที่ยวที่ 4 เดือน สิงหาคม 2568 | รวมค่าเนื้อ LNG และค่าใช้จ่ายนำเข้า"
+    ),
 
-  no_5_rate_baht_per_mmbtu:z
+  no_5_rate_baht_per_mmbtu: z
     .number()
     .nonnegative()
     .optional()
-    .describe("ราคา LNG สำหรับเที่ยวที่ 5 เดือน สิงหาคม 2568 | รวมค่าเนื้อ LNG และค่าใช้จ่ายนำเข้า"),
-  
+    .describe(
+      "ราคา LNG สำหรับเที่ยวที่ 5 เดือน สิงหาคม 2568 | รวมค่าเนื้อ LNG และค่าใช้จ่ายนำเข้า"
+    ),
 });
 
 export type PELNGInvoice = z.infer<typeof PELNGInvoiceSchema>;
